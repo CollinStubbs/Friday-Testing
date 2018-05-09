@@ -37,17 +37,48 @@ function getNextDayOfWeek(date, dayOfWeek) {
 }
 function updateWatchList(){
   var ss = SpreadsheetApp.getActive();
- //var ss = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1K9JIxfIX2T_9DAdKcZknWuGvhgvh9dr_rqMTMnA7p7A/edit#gid=1685631919");
+  //var ss = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1K9JIxfIX2T_9DAdKcZknWuGvhgvh9dr_rqMTMnA7p7A/edit#gid=1685631919");
   var sheets = ss.getSheets();
+  var storage = ss.getSheetByName("storage");
   var weekdays = ['Mon', "Tue", "Wed", "Thu", "Fri"];
-  var data = [];//
+  var curLength = 0;
+ // var data = [[]];//
   
   for(var i = 0; i<sheets.length; i++){
     for(var j = 0; j<weekdays.length; j++){
       if(sheets[i].getName().indexOf(weekdays[j]) > -1){
-       data.push(sheets[i].getDataRange().getDisplayValues()); 
+      //  data.push.apply(data,([sheets[i].getName()]));
+        //data.push.apply(data, [(sheets[i].getDataRange().getDisplayValues())]); 
+        var holder = sheets[i].getDataRange().getDisplayValues();
+        var spliced = holder.splice(3);
+        var end = findEnd(spliced);
+      //  spliced = holder.splice(end,end);
+        storage.getRange(1+curLength, 2, spliced.length, spliced[0].length).setValues(spliced);
+        curLength+=spliced.length;
       }
     }
   }
-  console.log(data);
+
+ // var watchCheckedData = checkData(data);
+  //write to a hiddensheet, countif, if countifcell >1->read in whole row
+  
+  //write: Name: John Doe, Tests Written: 3, Date+Subject, Date+Subject, Date+Subject
+}
+function findEnd(holder){
+  var h = 0;
+  
+  for(var i = 0; i<holder.length; i++){
+    if(holder[i][1] == ""){
+      h = i;
+      break;
+    }
+    
+  }
+  return h;
+}
+function checkData(data){
+  var checked = [];
+  
+ 
+  
 }
