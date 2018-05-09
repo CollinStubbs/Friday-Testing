@@ -42,6 +42,7 @@ function updateWatchList(){
   var storage = ss.getSheetByName("storage");
   var weekdays = ['Mon', "Tue", "Wed", "Thu", "Fri"];
   var curLength = 0;
+  var watchList = [];
  // var data = [[]];//
   
   for(var i = 0; i<sheets.length; i++){
@@ -52,14 +53,21 @@ function updateWatchList(){
         var holder = sheets[i].getDataRange().getDisplayValues();
         var spliced = holder.splice(3);
         var end = findEnd(spliced);
-      //  spliced = holder.splice(end,end);
+        spliced = spliced.splice(0, end);
         storage.getRange(1+curLength, 2, spliced.length, spliced[0].length).setValues(spliced);
         curLength+=spliced.length;
       }
     }
   }
 
- // var watchCheckedData = checkData(data);
+  for(var i = 1; i<curLength+1; i++){
+    if(Number(storage.getRange(i, 1).setValue("=COUNTIF(C:C, C"+(i)+")").getDisplayValue()) > 1){//sets the value of the cell to a count function wher eit counts their name and then gets the value and sees if theyve been more than once
+      var storageHolder = storage.getRange(i+":"+i).getValues()[0][2];
+      watchList.push(storage.getRange(i+":"+i).getValues()[0]);     
+    }
+  }
+  SpreadsheetApp.getActive().getSheetByName("Watch List").getRange(3, 3, watchList.length, watchList[0].length).setValues(watchList);
+  // var watchCheckedData = checkData(data);
   //write to a hiddensheet, countif, if countifcell >1->read in whole row
   
   //write: Name: John Doe, Tests Written: 3, Date+Subject, Date+Subject, Date+Subject
