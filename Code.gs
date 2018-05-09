@@ -36,8 +36,8 @@ function getNextDayOfWeek(date, dayOfWeek) {
   return resultDate;
 }
 function updateWatchList(){
-  var ssActive = SpreadsheetApp.getActive();
-  var ss = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1K9JIxfIX2T_9DAdKcZknWuGvhgvh9dr_rqMTMnA7p7A/edit#gid=1685631919");
+  var ss = SpreadsheetApp.getActive();
+ //var ss = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1K9JIxfIX2T_9DAdKcZknWuGvhgvh9dr_rqMTMnA7p7A/edit#gid=1685631919");
   var sheets = ss.getSheets();
   var weekdays = ['Mon', "Tue", "Wed", "Thu", "Fri"];
   var data = [];//
@@ -45,7 +45,7 @@ function updateWatchList(){
   for(var i = 0; i<sheets.length; i++){
     for(var j = 0; j<weekdays.length; j++){
       if(sheets[i].getName().indexOf(weekdays[j]) > -1){
-       data.push(sheets[i].getActiveRange().getDisplayValues()); 
+       data.push(sheets[i].getDataRange().getDisplayValues()); 
       }
     }
   }
