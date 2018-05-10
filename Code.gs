@@ -86,8 +86,7 @@ function watchSort(){
   var sheet = ss.getSheetByName("Watch List");
   var range = sheet.getDataRange();
   
-  // Sorts descending by column B
-  range.sort({column: 3, ascending: false});
+  range.sort({column: 1, ascending: false});
 }
 
 function findEnd(holder){
