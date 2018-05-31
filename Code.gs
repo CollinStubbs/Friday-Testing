@@ -3,7 +3,11 @@ function onOpen() {
   ui.createMenu('Friday Testing')
   .addSubMenu(ui.createMenu('New Testing Day')
               .addItem('New Friday', 'newFriday')
-              .addItem('New Thursday', 'newThursday'))
+              .addItem('New Thursday', 'newThursday')
+              .addItem('New Wednesday', 'newWednesday')
+              .addItem('New Tuesday', 'newTuesday')
+              .addItem('New Monday', 'newMonday'))
+  
   .addItem("Update Watch List", 'updateWatchList')
   .addToUi();
 }
@@ -17,7 +21,21 @@ function newThursday(){
   newDay(getNextDayOfWeek(today, 4));
   //newDay(new Date(the next thursday));
 }
-
+function newWednesday(){
+  var today = new Date();
+  newDay(getNextDayOfWeek(today, 3));
+  //newDay(new Date(the next thursday));
+}
+function newTuesday(){
+  var today = new Date();
+  newDay(getNextDayOfWeek(today, 2));
+  //newDay(new Date(the next thursday));
+}
+function newMonday(){
+  var today = new Date();
+  newDay(getNextDayOfWeek(today, 1));
+  //newDay(new Date(the next thursday));
+}
 function newDay(date){
   var ss = SpreadsheetApp.getActive();
   var template = ss.getSheetByName("Template");
